@@ -1,20 +1,22 @@
 package controllers;
 
+import com.avaje.ebean.Expr;
 import models.Course;
-import models.CourseContent;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.*;
+import views.html.course;
+import views.html.courses;
+import views.html.creatingCourse;
+import views.html.upload;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -60,13 +62,13 @@ public class Courses extends Controller
     public static Result showCoursePage(String courseName)
     {
 
-        List<CourseContent> contents = CourseContent.find.where().like("courseName", "%" + courseName + "%").findList();
-
-        return ok(course.render(User.find.byId(request().username()), Course.find.byId(courseName), contents));
+        return ok(course.render(User.find.byId(request().username()), Course.find.byId(courseName)));
     }
 
     public static Result uploadFile() throws IOException {    // заливка каринки на сервер
-        Course currentCourse =  Course.find.where().like("email", "%"+request().username()+"%").like("current", "true").findUnique();
+//        Course currentCourse =  Course.find.where().like("email", "%"+request().username()+"%").like("current", "true").findUnique();
+        Course currentCourse = Course.find.where().and(Expr.like("email", "%"+request().username()+"%"), Expr.like("current", "%1%")).findUnique();
+        System.err.println("!!!!!!!!!!!!!!!!!!" + currentCourse.courseName);
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart1 = body.getFile("filePart1");
 
@@ -85,6 +87,7 @@ public class Courses extends Controller
 
         return ok(courses.render(User.find.byId(request().username()), Course.find.where().like("email", "%"+request().username()+"%").findList()));
     }
+
 
 
 }
