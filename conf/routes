@@ -36,6 +36,8 @@ GET         /user/:id                             controllers.Users.showUserPage
 
 
 
+GET         /errorPage                                controllers.Application.showErrorPage()
+
 GET         /assets.javascript.ws.js              controllers.Application.wsJs(userEmail : String, sendTo : String)
 GET         /wsInterface                          controllers.Application.wsInterface(useremail : String, sendTo : String)
 GET         /chat/showdialog=:idfrom&:idto        controllers.Application.chat(idfrom : Int, idto : Int)

@@ -19,7 +19,7 @@
             <li>
                 <a href="@routes.Courses.showCoursePage(course.courseName)">@course.courseName</a>
                 @if(course.email == user.email) {
-                    <a href="###"> Добавить контент</a>
+                    <a href="@routes.Application.showErrorPage()" style="font-size: 16px; color: darkorange;"> > Добавить контент </a>
                 }
             </li>
         }
