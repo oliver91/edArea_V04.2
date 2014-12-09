@@ -66,9 +66,7 @@ public class Courses extends Controller
     }
 
     public static Result uploadFile() throws IOException {    // заливка каринки на сервер
-//        Course currentCourse =  Course.find.where().like("email", "%"+request().username()+"%").like("current", "true").findUnique();
         Course currentCourse = Course.find.where().and(Expr.like("email", "%"+request().username()+"%"), Expr.like("current", "%1%")).findUnique();
-        System.err.println("!!!!!!!!!!!!!!!!!!" + currentCourse.courseName);
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart1 = body.getFile("filePart1");
 
